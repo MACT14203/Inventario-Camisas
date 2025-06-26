@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shirt Inv</title>
+
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d6efd">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Inventario de Camisas</h1>
+    <div class="actions">
+      <button id="voidBtn" class="btn danger">VOID</button>
+      <button id="settingsBtn" class="btn settings">⚙</button>
+      <button id="resetBtn" class="btn warn">RESET</button>
+      <button id="downloadPdf" class="btn pdf">PDF</button>
+    </div>
+  </header>
+
+  <div id="lastTrans" class="banner hidden"></div>
+  <main id="grid"></main>
+
+  <!-- Modal ► Venta -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span id="closeOrder" class="close">&times;</span>
+      <h2 id="modalTitle">Registrar venta</h2>
+      <form id="orderForm">
+        <label>Nombre de cliente<input type="text" id="customerName" required></label>
+        <label>Cantidad<input type="number" id="quantity" min="1" required></label>
+        <p class="total-view">Total: $<span id="orderTotalAmt">0.00</span></p>
+        <label>Método de pago
+          <select id="paymentMethod">
+            <option value="ATH Móvil">ATH Móvil</option>
+            <option value="Efectivo">Efectivo</option>
+          </select>
+        </label>
+        <button type="submit" class="btn primary">Confirmar orden</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal ► VOID -->
+  <div id="voidModal" class="modal">
+    <div class="modal-content">
+      <span id="closeVoid" class="close">&times;</span>
+      <h2>Registrar VOID / devolución</h2>
+      <form id="voidForm">
+        <label>Talla devuelta<select id="voidSize"></select></label>
+        <label>Cantidad<input type="number" id="voidQty" min="1" required></label>
+        <label>Método de reembolso
+          <select id="voidPay">
+            <option value="ATH Móvil">ATH Móvil</option>
+            <option value="Efectivo">Efectivo</option>
+          </select>
+        </label>
+        <label>Nombre de cliente<input type="text" id="voidCust" required></label>
+        <button type="submit" class="btn danger">Registrar VOID</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal ► Settings -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <span id="closeSettings" class="close">&times;</span>
+      <h2>Ajustar inventario</h2>
+      <form id="settingsForm"></form>
+      <button id="saveSettings" class="btn primary">Guardar cambios</button>
+    </div>
+  </div>
+
+  <audio id="lowSound" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2f4cc46ee9.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Librerías externas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.0/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
